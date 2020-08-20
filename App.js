@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, Image, View } from 'react-native';
+import { Text, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+
+import Stack from './navigation/Stack';
 
 const cacheImages = (images) =>
 	images.map((image) => {
@@ -28,7 +31,9 @@ export default function App() {
 	});
 	const onFinish = () => setIsReady(true);
 	return isReady ? (
-		<Text>Ready</Text>
+		<NavigationContainer>
+			<Stack />
+		</NavigationContainer>
 	) : (
 		<AppLoading
 			startAsync={loadAssetes}
