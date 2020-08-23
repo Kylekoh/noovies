@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 export default () => {
 	return (
 		<View>
-			<Text>Favs</Text>
+			<Text>Favourties</Text>
 		</View>
 	);
 };
