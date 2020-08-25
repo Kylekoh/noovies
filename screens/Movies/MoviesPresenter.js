@@ -4,7 +4,7 @@ import Swiper from 'react-native-web-swiper';
 import { ActivityIndicator, View, Dimensions } from 'react-native';
 import Slide from '../../components/Movies/Slide';
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 const Container = styled.View`
 	flex: 1;
