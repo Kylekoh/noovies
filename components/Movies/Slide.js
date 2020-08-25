@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 import Poster from '../Poster';
+import Votes from '../Votes';
 import { Dimensions, Image, TouchableOpacity } from 'react-native';
 import { apiImage } from '../../api';
 
@@ -36,11 +37,8 @@ const Title = styled.Text`
 	margin-bottom: 10px;
 `;
 
-const Votes = styled.Text`
-	color: rgb(220, 220, 220);
+const VotesContainer = styled.View`
 	margin-bottom: 5px;
-	font-weight: 500;
-	font-size: 12px;
 `;
 
 const Overview = styled.Text`
@@ -67,7 +65,9 @@ const Slide = ({ id, title, backgroundImage, votes, overview, poster }) => (
 			<Poster url={apiImage(poster)} />
 			<Data>
 				<Title>{title.length > 40 ? `${title.slice(0, 40)}...` : title}</Title>
-				<Votes>🍓{votes} / 10</Votes>
+				<VotesContainer>
+					<Votes votes={votes} />
+				</VotesContainer>
 				<Overview>{overview.slice(0, 110)}...</Overview>
 				<TouchableOpacity>
 					<Button>
@@ -85,6 +85,7 @@ Slide.propTypes = {
 	backgroundImage: PropTypes.string.isRequired,
 	votes: PropTypes.number.isRequired,
 	overview: PropTypes.string.isRequired,
+	poster: PropTypes.string.isRequired,
 };
 
 export default Slide;

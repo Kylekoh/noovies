@@ -16,12 +16,12 @@ export default () => {
 
 	const getData = async () => {
 		const [nowPlaying, nowPlayingError] = await movieApi.nowPlaying();
-		const [popluar, popularError] = await movieApi.popular();
+		const [popular, popularError] = await movieApi.popular();
 		const [upcoming, upcomingError] = await movieApi.upcoming();
 		setMovies({
 			loading: false,
 			nowPlaying,
-			popluar,
+			popular,
 			upcoming,
 			nowPlayingError,
 			popularError,
