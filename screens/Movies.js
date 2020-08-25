@@ -3,21 +3,35 @@ import { View, Text } from 'react-native';
 import { movieApi } from '../api';
 
 export default () => {
-	const [nowPlaying, setNowPlaying] = useState({
-		movies: [],
-		error: null,
+	const [movies, setMovies] = useState({
+		nowPlaying: [],
+		nowPlayingError: null,
+		popluar: [],
+		popularError: null,
+		upcoming: [],
+		upcomingError: null,
 	});
+
 	const getData = async () => {
-		const [nowPlaying, error] = await movieApi.nowPlaying();
+		const [nowPlaying, nowPlayingError] = await movieApi.nowPlaying();
 		const [popluar, popularError] = await movieApi.popular();
-		console.log(nowPlaying, error);
+		const [upcoming, upcomingError] = await movieApi.upcoming();
+		setMovies({
+			nowPlaying,
+			popluar,
+			upcoming,
+			nowPlayingError,
+			popularError,
+			upcomingError,
+		});
 	};
 	useEffect(() => {
 		getData();
-	});
+	}, []);
+
 	return (
-		<View style={{ backgroundColor: 'black' }}>
-			<Text>Movies</Text>
+		<View style={{ flex: 1, backgroundColor: 'black' }}>
+			<Text style={{ color: 'white' }}>{movies.nowPlaying?.length}</Text>
 		</View>
 	);
 };
