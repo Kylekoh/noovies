@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiImage } from '../api';
 import Poster from './Poster';
 import Votes from './Votes';
+
 import { trimText } from '../utils';
-import { TouchableOpacity } from 'react-native';
 
 const Container = styled.View`
 	padding: 0px 30px;
