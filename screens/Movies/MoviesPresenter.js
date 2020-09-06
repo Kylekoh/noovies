@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-web-swiper';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions, ScrollView, ActivityIndicator } from 'react-native';
 import Slide from '../../components/Movies/Slide';
 import Title from '../../components/Title';
 import Vertical from '../../components/Vertical';
 import Horizontal from '../../components/Horizontal';
-import ScrollContainer from '../../components/ScrollContainer';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
@@ -26,6 +25,7 @@ export default ({ loading, nowPlaying, popular, upcoming }) => (
 	<ScrollView
 		style={{ backgroundColor: 'black' }}
 		contentContainerStyle={{
+			flex: loading ? 1 : 'auto',
 			justifyContent: loading ? 'center' : 'flex-start',
 		}}
 	>
