@@ -8,7 +8,7 @@ export default () => {
 		loading: true,
 		nowPlaying: [],
 		nowPlayingError: null,
-		popluar: [],
+		popular: [],
 		popularError: null,
 		upcoming: [],
 		upcomingError: null,

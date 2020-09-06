@@ -25,8 +25,17 @@ export default () => {
 			today,
 			thisWeek,
 			topRated,
+			popular,
+			todayError,
+			thisWeekError,
+			topRatedError,
+			popularError,
 		});
 	};
+
+	useEffect(() => {
+		getData();
+	}, []);
 
 	return <TvPresenter {...shows} />;
 };
