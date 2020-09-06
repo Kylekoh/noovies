@@ -15,6 +15,9 @@ export default () => {
 		setKeyword(text);
 	};
 	const search = async () => {
+		if (keyword === '') {
+			return;
+		}
 		const [movies, movieError] = await movieApi.search(keyword);
 		const [shows, showsError] = await tvApi.search(keyword);
 		setResults({

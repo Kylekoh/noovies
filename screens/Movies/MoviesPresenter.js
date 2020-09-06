@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Swiper from 'react-native-web-swiper';
-import { Dimensions, ScrollView } from 'react-native';
+import { Dimensions } from 'react-native';
 import Slide from '../../components/Movies/Slide';
 import Title from '../../components/Title';
 import Vertical from '../../components/Vertical';
@@ -20,8 +20,8 @@ const SliderContainer = styled.View`
 
 const Container = styled.View``;
 
-export default ({ loading, nowPlaying, popular, upcoming }) => (
-	<ScrollContainer loading={loading}>
+export default ({ refreshFn, loading, nowPlaying, popular, upcoming }) => (
+	<ScrollContainer refreshFn={refreshFn} loading={loading}>
 		<>
 			<SliderContainer>
 				<Swiper controlsEnabled={false} loop timeout={3}>
