@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from "react";
 import DetailPresenter from "./DetailPresenter";
-import { movieApi } from "../../api";
+import { tvApi, movieApi } from "../../api";
 
 export default ({
   navigation,
   route: {
-    params: { id, title, backgroundImage, poster, votes, overview },
+    params: { isTv, id, title, backgroundImage, poster, votes, overview },
   },
 }) => {
-  const [movie, setMovie] = useState({
-    title,
-    backgroundImage,
-    poster,
-    overview,
-    votes,
+  const [loading, setLoading] = useState(true);
+  const [detail, setDetail] = useState({
+    loading: true,
+    result: {
+      title,
+      backgroundImage,
+      poster,
+      overview,
+      votes,
+    },
   });
 
   const getData = async () => {
-    const [getMovie, getMovieError] = await movieApi.movie(id);
-    setMovie({
-      ...getMovie,
-      title: getMovie.title,
-      backgroundImage: getMovie.backdrop_path,
-      poster: getMovie.poster_path,
-      overview: getMovie.overview,
-      votes: getMovie.vote_average,
+    const [getDetail, getDetailError] = isTv
+      ? await tvApi.show(id)
+      : await movieApi.movie(id);
+    setDetail({
+      loading: false,
+      result: {
+        ...getDetail,
+        title: getDetail.title || getDetail.name,
+        backgroundImage: getDetail.backdrop_path,
+        poster: getDetail.poster_path,
+        overview: getDetail.overview,
+        votes: getDetail.vote_average,
+      },
     });
   };
 
@@ -36,5 +45,5 @@ export default ({
     navigation.setOptions({ title });
   });
 
-  return <DetailPresenter {...movie} />;
+  return <DetailPresenter {...detail} />;
 };

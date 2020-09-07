@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import styled from "styled-components/native";
 import ScrollContainer from "../../components/ScrollContainer";
 import { apiImage } from "../../api";
-import { Dimensions } from "react-native";
+import { Dimensions, ActivityIndicator } from "react-native";
 import Poster from "../../components/Poster";
 import Votes from "../../components/Votes";
 
@@ -29,7 +29,6 @@ const Container = styled.View`
 const Info = styled.View`
   width: 50%;
   margin-left: 40px;
-  top: 40px;
 `;
 
 const Title = styled.Text`
@@ -40,7 +39,7 @@ const Title = styled.Text`
 `;
 
 const Data = styled.View`
-  margin-top: 80px;
+  margin-top: 30px;
   padding: 0px 30px;
 `;
 
@@ -48,7 +47,7 @@ const DataName = styled.Text`
   color: white;
   opacity: 0.8;
   font-weight: 800;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 `;
 
 const DataValue = styled.Text`
@@ -57,25 +56,28 @@ const DataValue = styled.Text`
   font-weight: 500;
 `;
 
-export default ({ backgroundImage, title, votes, overview, poster }) => (
+export default ({ result, loading }) => (
   <ScrollContainer loading={false}>
     <>
       <Header>
-        <BG source={{ uri: apiImage(backgroundImage, "-") }} />
+        <BG source={{ uri: apiImage(result.backgroundImage, "-") }} />
         <Container>
-          <Poster url={poster} />
+          <Poster url={result.poster} />
           <Info>
-            <Title>{title}</Title>
-            {votes && <Votes votes={votes} />}
+            <Title>{result.title}</Title>
+            {result.votes && <Votes votes={result.votes} />}
           </Info>
         </Container>
       </Header>
       <Data>
-        {overview && (
+        {result.overview && (
           <>
             <DataName>Overview</DataName>
-            <DataValue>{overview}</DataValue>
+            <DataValue>{result.overview}</DataValue>
           </>
+        )}
+        {loading && (
+          <ActivityIndicator styel={{ marginTop: 30 }} color={"white"} />
         )}
       </Data>
     </>
