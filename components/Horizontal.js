@@ -7,7 +7,7 @@ import { apiImage } from "../api";
 import Poster from "./Poster";
 import Votes from "./Votes";
 
-import { trimText, formaDate } from "../utils";
+import { trimText, formatDate } from "../utils";
 
 const Container = styled.View`
   padding: 0px 30px;
@@ -65,7 +65,7 @@ const Horizontal = ({
         <Data>
           <Title>{trimText(title, 30)}</Title>
           {releaseDate ? (
-            <ReleaseDate>{formaDate(releaseDate)}</ReleaseDate>
+            <ReleaseDate>{formatDate(releaseDate)}</ReleaseDate>
           ) : null}
           <Overview>{trimText(overview, 130)}</Overview>
         </Data>

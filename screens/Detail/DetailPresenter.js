@@ -6,6 +6,7 @@ import { apiImage } from "../../api";
 import { Dimensions, ActivityIndicator } from "react-native";
 import Poster from "../../components/Poster";
 import Votes from "../../components/Votes";
+import { formatDate } from "../../utils";
 
 const BG = styled.Image`
   width: 100%;
@@ -44,6 +45,7 @@ const Data = styled.View`
 `;
 
 const DataName = styled.Text`
+  margin-top: 30px;
   color: white;
   opacity: 0.8;
   font-weight: 800;
@@ -57,7 +59,10 @@ const DataValue = styled.Text`
 `;
 
 export default ({ result, loading }) => (
-  <ScrollContainer loading={false}>
+  <ScrollContainer
+    loading={false}
+    contentContainerStyle={{ paddingBottom: 80 }}
+  >
     <>
       <Header>
         <BG source={{ uri: apiImage(result.backgroundImage, "-") }} />
@@ -70,14 +75,64 @@ export default ({ result, loading }) => (
         </Container>
       </Header>
       <Data>
+        {loading && (
+          <ActivityIndicator styel={{ marginTop: 30 }} color={"white"} />
+        )}
+        {result.spoken_languages && (
+          <>
+            <DataName>Languages</DataName>
+            <DataValue>
+              {result.spoken_languages.map((l) => `${l.name} `)}
+            </DataValue>
+          </>
+        )}
+        {result.release_date && (
+          <>
+            <DataName>Release Date</DataName>
+            <DataValue>{formatDate(result.release_date)}</DataValue>
+          </>
+        )}
         {result.overview && (
           <>
             <DataName>Overview</DataName>
             <DataValue>{result.overview}</DataValue>
           </>
         )}
-        {loading && (
-          <ActivityIndicator styel={{ marginTop: 30 }} color={"white"} />
+        {result.status && (
+          <>
+            <DataName>Status</DataName>
+            <DataValue>{result.status}</DataValue>
+          </>
+        )}
+        {result.runtime && (
+          <>
+            <DataName>Runtime</DataName>
+            <DataValue>{result.runtime} minutes</DataValue>
+          </>
+        )}
+        {result.first_air_date && (
+          <>
+            <DataName>First Air Date</DataName>
+            <DataValue>{formatDate(result.first_air_date)}</DataValue>
+          </>
+        )}
+        {result.genres && (
+          <>
+            <DataName>Genres</DataName>
+            <DataValue>
+              {result.genres.map((g, index) =>
+                index + 1 === result.genres.length ? g.name : `${g.name}, `
+              )}
+            </DataValue>
+          </>
+        )}
+        {result.number_of_episodes && (
+          <>
+            <DataName>Seasons / Episodes</DataName>
+            <DataValue>
+              {result.number_of_seasons} / {result.number_of_episodes}
+            </DataValue>
+          </>
         )}
       </Data>
     </>
