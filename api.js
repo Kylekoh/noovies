@@ -21,7 +21,6 @@ const getAnything = async (path, params = {}) => {
 		return [null, e];
 	}
 };
-
 export const movieApi = {
 	nowPlaying: () => getAnything('/movie/now_playing'),
 	popular: () => getAnything('/movie/popular'),
