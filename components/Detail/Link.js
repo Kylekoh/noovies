@@ -21,6 +21,6 @@ const Link = ({ onPress, text, icon }) => (
       <Text style={{ color: "white" }}>{text}</Text>
     </Container>
   </TouchableOpacity>
-);
+
 
 export default Link;
