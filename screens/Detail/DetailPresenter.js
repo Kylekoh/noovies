@@ -9,59 +9,57 @@ import Votes from "../../components/Votes";
 import { formatDate } from "../../utils";
 import Link from "../../components/Detail/Link";
 
-
 const BG = styled.Image`
-	width: 100%;
-	height: 100%;
-	opacity: 0.4;
-	position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  position: absolute;
 `;
 
 const Header = styled.View`
-	height: ${Dimensions.get('window').height / 3}px;
-	align-items: center;
-	justify-content: flex-end;
+  height: ${Dimensions.get("window").height / 3}px;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const Container = styled.View`
-	flex-direction: row;
-	align-items: center;
-	top: 30px;
+  flex-direction: row;
+  align-items: center;
+  top: 30px;
 `;
 
 const Info = styled.View`
-	width: 50%;
-	margin-left: 40px;
+  width: 50%;
+  margin-left: 40px;
 `;
 
 const Title = styled.Text`
-	color: white;
-	font-weight: 600;
-	font-size: 24px;
-	margin-bottom: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 10px;
 `;
 
 const Data = styled.View`
-	margin-top: 30px;
-	padding: 0px 30px;
+  margin-top: 30px;
+  padding: 0px 30px;
 `;
 
 const DataName = styled.Text`
-	margin-top: 30px;
-	color: white;
-	opacity: 0.8;
-	font-weight: 800;
-	margin-bottom: 15px;
+  margin-top: 30px;
+  color: white;
+  opacity: 0.8;
+  font-weight: 800;
+  margin-bottom: 15px;
 `;
 
 const DataValue = styled.Text`
-	color: white;
-	opacity: 0.8;
-	font-weight: 500;
+  color: white;
+  opacity: 0.8;
+  font-weight: 500;
 `;
 
 export default ({ openBrowser, result, loading }) => (
-<<<<<<< HEAD
   <ScrollContainer
     loading={false}
     contentContainerStyle={{ paddingBottom: 80 }}
@@ -73,7 +71,7 @@ export default ({ openBrowser, result, loading }) => (
           <Poster url={result.poster} />
           <Info>
             <Title>{result.title}</Title>
-            {result.votes && <Votes votes={result.votes} />}
+            {result.votes ? <Votes votes={result.votes} /> : null}
           </Info>
         </Container>
       </Header>
@@ -81,45 +79,45 @@ export default ({ openBrowser, result, loading }) => (
         {loading && (
           <ActivityIndicator styel={{ marginTop: 30 }} color={"white"} />
         )}
-        {result.spoken_languages && (
+        {result.spoken_languages ? (
           <>
             <DataName>Languages</DataName>
             <DataValue>
               {result.spoken_languages.map((l) => `${l.name} `)}
             </DataValue>
           </>
-        )}
-        {result.release_date && (
+        ) : null}
+        {result.release_date ? (
           <>
             <DataName>Release Date</DataName>
             <DataValue>{formatDate(result.release_date)}</DataValue>
           </>
-        )}
-        {result.overview && (
+        ) : null}
+        {result.overview ? (
           <>
             <DataName>Overview</DataName>
             <DataValue>{result.overview}</DataValue>
           </>
-        )}
-        {result.status && (
+        ) : null}
+        {result.status ? (
           <>
             <DataName>Status</DataName>
             <DataValue>{result.status}</DataValue>
           </>
-        )}
-        {result.runtime && (
+        ) : null}
+        {result.runtime ? (
           <>
             <DataName>Runtime</DataName>
             <DataValue>{result.runtime} minutes</DataValue>
           </>
-        )}
-        {result.first_air_date && (
+        ) : null}
+        {result.first_air_date ? (
           <>
             <DataName>First Air Date</DataName>
             <DataValue>{formatDate(result.first_air_date)}</DataValue>
           </>
-        )}
-        {result.genres && (
+        ) : null}
+        {result.genres ? (
           <>
             <DataName>Genres</DataName>
             <DataValue>
@@ -128,16 +126,16 @@ export default ({ openBrowser, result, loading }) => (
               )}
             </DataValue>
           </>
-        )}
-        {result.number_of_episodes && (
+        ) : null}
+        {result.number_of_episodes ? (
           <>
             <DataName>Seasons / Episodes</DataName>
             <DataValue>
               {result.number_of_seasons} / {result.number_of_episodes}
             </DataValue>
           </>
-        )}
-        {result.imdb_id && (
+        ) : null}
+        {result.imdb_id ? (
           <TouchableOpacity
             onPress={() =>
               openBrowser(`https://www.imdb.com/title/${result.imdb_id}`)
@@ -145,9 +143,9 @@ export default ({ openBrowser, result, loading }) => (
           >
             <DataValue>IMDB Page</DataValue>
           </TouchableOpacity>
-        )}
+        ) : null}
 
-        {result.videos.results?.length > 0 && (
+        {result.videos.results?.length > 0 ? (
           <>
             <DataName>Videos</DataName>
             {result.videos.results.map((video) => (
@@ -161,7 +159,7 @@ export default ({ openBrowser, result, loading }) => (
               />
             ))}
           </>
-        )}
+        ) : null}
       </Data>
     </>
   </ScrollContainer>
