@@ -7,6 +7,7 @@ import { Dimensions, ActivityIndicator, TouchableOpacity } from "react-native";
 import Poster from "../../components/Poster";
 import Votes from "../../components/Votes";
 import { formatDate } from "../../utils";
+import Link from "../../components/Detail/Link";
 
 const BG = styled.Image`
   width: 100%;
@@ -142,6 +143,22 @@ export default ({ openBrowser, result, loading }) => (
           >
             <DataValue>IMDB Page</DataValue>
           </TouchableOpacity>
+        )}
+
+        {result.videos.results?.length > 0 && (
+          <>
+            <DataName>Videos</DataName>
+            {result.videos.results.map((video) => (
+              <Link
+                text={video.name}
+                key={video.id}
+                icon="youtube-play"
+                onPress={() =>
+                  openBrowser(`https://www.youtube.com/watch?v=${video.key}`)
+                }
+              />
+            ))}
+          </>
         )}
       </Data>
     </>
