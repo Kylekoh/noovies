@@ -27,32 +27,50 @@ const styles = {
 
 export default ({ results }) => {
 	const [topIndex, setTopIndex] = useState(0);
+	const nextCard = () => setTopIndex((currentValue) => currentValue + 1);
 	const position = new Animated.ValueXY();
 	const panResponder = PanResponder.create({
 		onStartShouldSetPanResponder: () => true,
 		onPanResponderMove: (evt, { dx, dy }) => {
 			position.setValue({ x: dx, y: dy });
 		},
-		onPanResponderRelease: () => {
-			Animated.spring(position, {
-				toValue: {
-					x: 0,
-					y: 0,
-				},
-				bounciness: 28,
-			}).start();
+		onPanResponderRelease: (evt, { dx, dy }) => {
+			if (dx >= 300) {
+				// discard to the right
+				Animated.spring(position, {
+					toValue: {
+						x: WIDTH,
+						y: dy + 100,
+					},
+				}).start(nextCard);
+			} else if (dx <= -250) {
+				// discard to the left
+				Animated.spring(position, {
+					toValue: {
+						x: -WIDTH - 100,
+						y: dy,
+					},
+				}).start(nextCard);
+			} else {
+				Animated.spring(position, {
+					toValue: {
+						x: 0,
+						y: 0,
+					},
+				}).start();
+			}
 		},
 	});
 
 	const rotationValues = position.x.interpolate({
-		inputRange: [-200, 0, 200],
-		outputRange: ['-50deg', '0deg', '5deg'],
+		inputRange: [-255, 0, 255],
+		outputRange: ['-8deg', '0deg', '8deg'],
 		extrapolate: 'clamp',
 	});
 
 	const secondCartOpacity = position.x.interpolate({
 		inputRange: [-255, 0, 255],
-		outputRange: [1, 0.5, 1],
+		outputRange: [1, 0.8, 1],
 		extrapolate: 'clamp',
 	});
 
@@ -65,7 +83,9 @@ export default ({ results }) => {
 	return (
 		<Container>
 			{results.map((result, index) => {
-				if (index === topIndex) {
+				if (index < topIndex) {
+					return null;
+				} else if (index === topIndex) {
 					return (
 						<Animated.View
 							style={{
