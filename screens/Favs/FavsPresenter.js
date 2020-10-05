@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions, PanResponder, Animated } from "react-native";
 import styled from "styled-components/native";
 import { apiImage } from "../../api";
 
@@ -11,13 +11,6 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Card = styled.View`
-  top: 80px;
-  height: ${HEIGHT / 1.5}px;
-  width: 90%;
-  position: absolute;
-`;
-
 const Poster = styled.Image`
   overflow: hidden;
   border-radius: 20px;
@@ -25,14 +18,63 @@ const Poster = styled.Image`
   height: 100%;
 `;
 
+const styles = {
+  top: 80,
+  height: HEIGHT / 1.5,
+  width: "90%",
+  position: "absolute",
+};
+
 export default ({ results }) => {
+  const [topIndex, setTopIndex] = useState(0);
+  const position = new Animated.ValueXY();
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, { dx, dy }) => {
+      position.setValue({ x: dx, y: dy });
+    },
+    onPanResponderRelease: () => {
+      Animated.spring(position, {
+        toValue: {
+          x: 0,
+          y: 0,
+        },
+        bounciness: 28,
+      }).start();
+    },
+  });
+
   return (
     <Container>
-      {results.reverse().map((result) => (
-        <Card key={result.id}>
-          <Poster source={{ uri: apiImage(result.poster_path) }} />
-        </Card>
-      ))}
+      {results.reverse().map((result, index) => {
+        if (index === topIndex) {
+          return (
+            <Animated.View
+              style={{
+                ...styles,
+                zIndex: 1,
+                transform: [...position.getTranslateTransform()],
+              }}
+              key={result.id}
+              {...panResponder.panHandlers}
+            >
+              <Poster source={{ uri: apiImage(result.poster_path) }} />
+            </Animated.View>
+          );
+        }
+        return (
+          <Animated.View
+            style={{
+              ...styles,
+              transform: [...position.getTranslateTransform()],
+            }}
+            key={result.id}
+            {...panResponder.panHandlers}
+          >
+            <Poster source={{ uri: apiImage(result.poster_path) }} />
+          </Animated.View>
+        );
+      })}
     </Container>
   );
 };
